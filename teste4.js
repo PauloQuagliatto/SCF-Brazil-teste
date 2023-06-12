@@ -1,13 +1,19 @@
-var data =  require("./fakeData");
+var data = require("./fakeData");
 
-module.exports =  function(req, res) {
-  
-    var id =  req.query.id;
+module.exports = function(req, res) {
+  const { id } = req.query;
+  const { name, job } = req.body;
 
-    const reg = data.find(d => id == id);
-    reg.name = req.body.name;
-    reg.job = req.body.job;
+  const reg = data.find(d => d.id == id);
 
-    res.send(reg);
+  if (!reg)
+    return
 
+  reg.name = name;
+  reg.job = job
+  data = data.map((dataItem) => {
+    return dataItem.id === id ? reg : dataItem
+  })
+
+  res.send(reg);
 };

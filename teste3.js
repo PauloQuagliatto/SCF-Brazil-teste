@@ -1,15 +1,11 @@
-var data =  require("./fakeData");
+var data = require("./fakeData");
 
 module.exports = function(req, res) {
-  
-    var name =  req.query.name;
+  const { name } = req.query;
+  const previousLength = data.length;
 
-    for(let i = 0; i < data.length;  i++) {
-        if(i.name == name) {
-            data[i] = null;
-        }
-    }
+  data = data.filter((d) => d.name !== name);
 
+  if (data.length < previousLength);
     res.send("success");
-
 };
